@@ -47,7 +47,7 @@ function GLInstance(canvasID) {
             gl.bindBuffer(gl.ARRAY_BUFFER, rtn.bufVetices);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(arrVert), gl.STATIC_DRAW);
             gl.enableVertexAttribArray(ATTR_POSITION_LOC);
-            gl.vertexArribPointer(ATTR_POSITION_LOC, 3, gl.FLOAT, false, 0, 0);
+            gl.vertexAttribPointer(ATTR_POSITION_LOC, 3, gl.FLOAT, false, 0, 0);
         }
 
         if (arrNor) {
@@ -55,7 +55,7 @@ function GLInstance(canvasID) {
             gl.bindBuffer(gl.ARRAY_BUFFER, rtn.bufNormals);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(arrNor), gl.STATIC_DRAW);
             gl.enableVertexAttribArray(ATTR_NORMAL_LOC);
-            gl.vertexArribPointer(ATTR_NORMAL_LOC, 3, gl.FLOAT, false, 0, 0);
+            gl.vertexAttribPointer(ATTR_NORMAL_LOC, 3, gl.FLOAT, false, 0, 0);
         }
 
         if (arrUV) {
@@ -63,7 +63,7 @@ function GLInstance(canvasID) {
             gl.bindBuffer(gl.ARRAY_BUFFER, rtn.bufUV);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(arrUV), gl.STATIC_DRAW);
             gl.enableVertexAttribArray(ATTR_UV_LOC);
-            gl.vertexArribPointer(ATTR_UV_LOC, 3, gl.FLOAT, false, 0, 0);
+            gl.vertexAttribPointer(ATTR_UV_LOC, 3, gl.FLOAT, false, 0, 0);
         }
 
         if (arrIdx) {
@@ -74,9 +74,10 @@ function GLInstance(canvasID) {
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
         }
         gl.bindVertexArray(null);
-        gl.bufferData(gl.ARRAY_BUFFER, null);
+        gl.bufferData(gl.ARRAY_BUFFER, null,gl.STATIC_DRAW);
 
         gl.mMeshCache[name] = rtn;
+        return rtn;
     }
 
     //...................................................

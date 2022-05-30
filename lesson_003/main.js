@@ -4,7 +4,12 @@ let gl,
     uAngle = 0,
     gRLoop,
     gShader = null,
-    gModal = null;
+    gModal = null,
+    gPointSize = 0,
+    gPSizeStep = 3,
+    gAngle = 0,
+    gAngleStep = (Math.PI / 180.0) * 90;
+
 const vertexShader = `#version 300 es
         in vec3 a_position;
         uniform float uPointSize;
@@ -29,42 +34,54 @@ const fragmentShader = `#version 300 es
 `
 const main = () => {
     gl = GLInstance("canvas").setSize(500, 500).clearScreen();
-    let program = ShaderUtil.bindProgram(gl, vertexShader, fragmentShader, true);
-    gl.useProgram(program);
-    let aPositionLoc = gl.getAttribLocation(program, "a_position"),
-        uPointSizeLoc = gl.getUniformLocation(program, "uPointSize"),
-        uAngleLoc = gl.getUniformLocation(program, "uAngle");
-    gl.useProgram(null);
 
-    let arrVerts = new Float32Array([0, 0, 0, 0.5, 0.5, 0]),
-        bufVerts = gl.createArrayBuffer();
-    gVertCnt = arrVerts.length / 3;
+    gShader = new TestShader(gl);
 
-    gl.useProgram(program);
-    gl.uniform1f(uPointSizeLoc, 50.0);
+    //Set Up Data Buffers
+    var mesh = gl.createMeshVAO("dots", null, [0, 0, 0, 0.1, 0.1, 0, 0.1, -0.1, 0, -0.1, -0.1, 0, -0.1, 0.1, 0]);
+    mesh.drawMode = gl.POINTS; //Most often the draw mode will be triangles, but in this instance we need Points
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, bufVerts);
-    gl.enableVertexAttribArray(aPositionLoc);
-    gl.vertexAttribPointer(aPositionLoc, 3, gl.FLOAT, false, 0, 0);
-    gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    //There is many instances when we want a single mesh object shared between many 
+    //modals, for example trees. One mesh with many transforms technically.
+    gModal = new Modal(mesh);
 
-    gl.drawArrays(gl.POINTS, 0, gVertCnt);
-    var gPointSize = 0,
-        gPSizeStep = 3,
-        gAngle = 0,
-        gAngleStep = (Math.PI / 180.0) * 90;	//90 degrees in Radians
 
-    function onRender(dt) {
-        gPointSize += gPSizeStep * dt;
-        var size = (Math.sin(gPointSize) * 10.0) + 30.0;
-        gl.uniform1f(uPointSizeLoc, size);						//Store data to the shader's uniform variable uPointSize
-
-        gAngle += gAngleStep * dt;								//Update the angle at the rate of AngleStep Per Second
-        gl.uniform1f(uAngleLoc, gAngle);							//Pass new angle value to the shader.
-
-        gl.clearScreen();
-        gl.drawArrays(gl.POINTS, 0, gVertCnt);					//Draw the points
-    }
 
     gRLoop = new RenderLoop(onRender).start();
+}
+
+function onRender(dt) {
+    // gPointSize += gPSizeStep * dt;
+    // var size = (Math.sin(gPointSize) * 10.0) + 30.0;
+    // gl.uniform1f(uPointSizeLoc, size);						//Store data to the shader's uniform variable uPointSize
+
+    // gAngle += gAngleStep * dt;								//Update the angle at the rate of AngleStep Per Second
+    // gl.uniform1f(uAngleLoc, gAngle);							//Pass new angle value to the shader.
+
+    gl.clearScreen();
+    gShader.activate().set(
+        (Math.sin(gPointSize) * 10.0 + 30.0),
+        (gAngle += gAngleStep * dt)
+    ).renderModal(gModal);
+    // gl.drawArrays(gl.POINTS, 0, gVertCnt);					//Draw the points
+
+}
+
+class TestShader extends Shader {
+    constructor(gl) {
+        super(gl, vertexShader, fragmentShader);	//Call the base class constructor which will setup most of what we need
+
+        //Our shader uses custom uniforms, this is the time to get its location for future use.
+        this.uniformLoc.uPointSize = gl.getUniformLocation(this.program, "uPointSize");
+        this.uniformLoc.uAngle = gl.getUniformLocation(this.program, "uAngle");
+
+        gl.useProgram(null); //Done setting up shader
+    }
+
+    //Simple function that passes in Angle and Pointsize uniform data to the shader program.
+    set(size, angle) {
+        this.gl.uniform1f(this.uniformLoc.uPointSize, size);
+        this.gl.uniform1f(this.uniformLoc.uAngle, angle);
+        return this;
+    }
 }

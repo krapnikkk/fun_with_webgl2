@@ -1,6 +1,6 @@
 class Shader{
     constructor(gl, vertShader, fragShader) {
-        this.program = ShaderUtil.createProgram(gl, vertShader, fragShader, true);
+        this.program = ShaderUtil.bindProgram(gl, vertShader, fragShader, true);
 
         if (this.program != null) {
             this.gl = gl;
@@ -95,12 +95,12 @@ class ShaderUtil {
     }
 
     static bindProgram(gl, verctex, fragment, doValidate) {
-        let vShader = ShaderUtil.createShader(gl, vertexShader, gl.VERTEX_SHADER),
-            fShader = ShaderUtil.createShader(gl, fragmentShader, gl.FRAGMENT_SHADER);
-        return ShaderUtil.createProgram(gl, vShader, fShader, true);
+        let vShader = ShaderUtil.createShader(gl, verctex, gl.VERTEX_SHADER),
+            fShader = ShaderUtil.createShader(gl, fragment, gl.FRAGMENT_SHADER);
+        return ShaderUtil.createProgram(gl, vShader, fShader, doValidate);
     }
 
-    static getStandardAttribLocation(gl, program) {
+    static getStandardAttribLocations(gl, program) {
         return {
             position: gl.getAttribLocation(program, ATTR_POSITION_NAME),
             normal: gl.getAttribLocation(program, ATTR_NORMAL_NAME),
