@@ -1,6 +1,5 @@
 let gl,
     gVertCnt = 0,
-    uPointSizeLoc = -1,
     uAngle = 0,
     gRLoop,
     gShader = null,
@@ -12,7 +11,7 @@ let gl,
 
 const vertexShader = `#version 300 es
         in vec3 a_position;
-        uniform float uPointSize;
+        uniform mediump float uPointSize;
         uniform float uAngle;
         void main(){
             gl_PointSize = uPointSize;
@@ -28,8 +27,10 @@ const vertexShader = `#version 300 es
 const fragmentShader = `#version 300 es
         precision mediump float;
         out vec4 finalColor;
+        uniform float uPointSize;
         void main(){
-            finalColor = vec4(0.0,0.0,0.0,1.0);
+            float c = (40.0 - uPointSize)/20.0;
+            finalColor = vec4(c,c,c,1.0);
         }
 `
 const main = () => {
@@ -51,19 +52,11 @@ const main = () => {
 }
 
 function onRender(dt) {
-    // gPointSize += gPSizeStep * dt;
-    // var size = (Math.sin(gPointSize) * 10.0) + 30.0;
-    // gl.uniform1f(uPointSizeLoc, size);						//Store data to the shader's uniform variable uPointSize
-
-    // gAngle += gAngleStep * dt;								//Update the angle at the rate of AngleStep Per Second
-    // gl.uniform1f(uAngleLoc, gAngle);							//Pass new angle value to the shader.
-
     gl.clearScreen();
     gShader.activate().set(
-        (Math.sin(gPointSize) * 10.0 + 30.0),
+        (Math.sin((gPointSize += gPSizeStep * dt)) * 10.0) + 30.0,
         (gAngle += gAngleStep * dt)
     ).renderModal(gModal);
-    // gl.drawArrays(gl.POINTS, 0, gVertCnt);					//Draw the points
 
 }
 

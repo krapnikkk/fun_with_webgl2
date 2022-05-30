@@ -74,7 +74,7 @@ function GLInstance(canvasID) {
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
         }
         gl.bindVertexArray(null);
-        gl.bufferData(gl.ARRAY_BUFFER, null,gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, null);
 
         gl.mMeshCache[name] = rtn;
         return rtn;
