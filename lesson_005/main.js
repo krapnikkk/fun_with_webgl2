@@ -28,8 +28,8 @@ const main = () => {
 
     gShader = new TestShader(gl, [0.8, 0.8, 0.8, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]);
 
-    var mesh = gl.createMeshVAO("lines", null, [0, 1, 0, 0, -1, 0, -1, 0, 0, 1, 0, 0]);
-    mesh.drawMode = gl.LINES;
+    // var mesh = gl.createMeshVAO("lines", null, [0, 1, 0, 0, -1, 0, -1, 0, 0, 1, 0, 0]);
+    // mesh.drawMode = gl.LINES;
 
 
 
