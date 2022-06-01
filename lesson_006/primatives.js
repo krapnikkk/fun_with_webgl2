@@ -1,6 +1,9 @@
 var Primatives = {};
 Primatives.GridAxis = class {
-    static createMesh(gl) {
+    static createModal(gl, incAxis) {
+        return new Modal(Primatives.GridAxis.createMesh(gl, incAxis));
+    }
+    static createMesh(gl, incAxis) {
         //Dynamiclly create a grid
         var verts = [],
             size = 1.8,			// W/H of the outer box of the grid, from origin we can only go 1 unit in each direction, so from left to right is 2 units max
@@ -35,26 +38,40 @@ Primatives.GridAxis = class {
             verts.push(1);		//c2
         }
 
-        //TODO : Remove the following, its only to demo extra lines can be thrown in.
-        verts.push(-half);	//x1
-        verts.push(-half);	//y1
-        verts.push(0);		//z1
-        verts.push(2);		//c2
+        if (incAxis) {
+            // x
+            verts.push(-1.1);	//x1
+            verts.push(0);	//y1
+            verts.push(0);		//z1
+            verts.push(1);		//c2
 
-        verts.push(half);	//x2
-        verts.push(half);	//y2
-        verts.push(0);		//z2
-        verts.push(2);		//c2
+            verts.push(1.1);	//x2
+            verts.push(0);	//y2
+            verts.push(0);		//z2
+            verts.push(1);		//c2
 
-        verts.push(-half);	//x1
-        verts.push(half);	//y1
-        verts.push(0);		//z1
-        verts.push(3);		//c2
+            // y
+            verts.push(0);	//x1
+            verts.push(-1.1);	//y1
+            verts.push(0);		//z1
+            verts.push(2);		//c2
 
-        verts.push(half);	//x2
-        verts.push(-half);	//y2
-        verts.push(0);		//z2
-        verts.push(3);		//c2
+            verts.push(0);	//x2
+            verts.push(1.1);	//y2
+            verts.push(0);		//z2
+            verts.push(2);		//c2
+
+            // z
+            verts.push(0);	//x1
+            verts.push(0);	//y1
+            verts.push(-1.1);		//z1
+            verts.push(3);		//c2
+
+            verts.push(0);	//x2
+            verts.push(0);	//y2
+            verts.push(1.1);		//z2
+            verts.push(3);		//c2
+        }
 
 
         //Setup

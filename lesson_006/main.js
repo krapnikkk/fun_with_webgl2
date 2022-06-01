@@ -4,6 +4,7 @@ let gl,
     gShader,
     gCamera,
     gCameraCtrl;
+let gGridShader,gGridModal;
 
 const vertexShader = `#version 300 es
         in vec3 a_position;
@@ -13,7 +14,7 @@ const vertexShader = `#version 300 es
         uniform mat4 uMVMatrix;
         uniform mat4 uCameraMatrix;
 
-        uniform vec3 uColor[4];
+        uniform vec3 uColor[4]; // four vec3 with an array
         out vec4 color;
         void main(){
             color = vec4(uColor[int(a_color)],1.0);
@@ -34,10 +35,13 @@ const main = () => {
     gCamera = new Camera(gl);
     gCamera.transform.position.set(0,1,3);
     gCameraCtrl = new CameraController(gl,gCamera);
-    gShader = new TestShader(gl, [0.8, 0.8, 0.8, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]);
-    gShader.activate().setPerspective(gCamera.projectionMatrix).deactivate();
+    // gShader = new TestShader(gl, [0.8, 0.8, 0.8, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]);
+    // gShader.activate().setPerspective(gCamera.projectionMatrix).deactivate();
 
-    gModal = new Modal(Primatives.GridAxis.createMesh(gl));
+    // gModal = new Modal(Primatives.GridAxis.createMesh(gl,true));
+
+    gGridShader = new GridAxisShader(gl, gCamera.projectionMatrix);
+    gGridModal = Primatives.GridAxis.createModal(gl,true);
 
     gRLoop = new RenderLoop(onRender).start();
 }
@@ -46,7 +50,7 @@ function onRender(dt) {
     gCamera.updateViewMatrix();
     gl.clearScreen();
 
-    gShader.activate().setCameraMatrix(gCamera.viewMatrix).renderModal(gModal.preRender());
+    gGridShader.activate().setCameraMatrix(gCamera.viewMatrix).renderModal(gGridModal.preRender());
 
 }
 
