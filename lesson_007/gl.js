@@ -69,7 +69,7 @@ function GLInstance(canvasID) {
             gl.bindBuffer(gl.ARRAY_BUFFER, rtn.bufUV);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(arrUV), gl.STATIC_DRAW);
             gl.enableVertexAttribArray(ATTR_UV_LOC);
-            gl.vertexAttribPointer(ATTR_UV_LOC, 3, gl.FLOAT, false, 0, 0);
+            gl.vertexAttribPointer(ATTR_UV_LOC, 2, gl.FLOAT, false, 0, 0);
         }
 
         if (arrIdx) {
@@ -77,10 +77,13 @@ function GLInstance(canvasID) {
             rtn.indexCount = arrIdx.length;
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, rtn.bufIndex);
             gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(arrIdx), gl.STATIC_DRAW);
-            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+            // gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
         }
         gl.bindVertexArray(null);
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
+        if (arrIdx) {
+            this.bindBuffer(this.ELEMENT_ARRAY_BUFFER, null);
+        }
 
         gl.mMeshCache[name] = rtn;
         return rtn;
