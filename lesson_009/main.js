@@ -9,7 +9,7 @@ let gGridShader, gGridModal;
 
 const vertexShader = `#version 300 es
         in vec4 a_position;
-        in vec3 a_norm;
+        in vec3 a_normal;
         in vec2 a_uv;
 
         uniform mat4 uPMatrix;
@@ -20,9 +20,9 @@ const vertexShader = `#version 300 es
 		uniform float uTime;
 
         vec3 warp(vec3 p){
-			//return p + 0.2 * abs(cos(uTime*0.002)) * a_norm;
-			//return p + 0.5 * abs(cos(uTime*0.003 + p.y)) * a_norm;
-			return p + 0.5 * abs(cos(uTime*0.003 + p.y*2.0 + p.x*2.0 + p.z)) * a_norm;
+			// return p + 0.2 * abs(cos(uTime*0.002)) * a_normal;
+			//return p + 0.5 * abs(cos(uTime*0.003 + p.y)) * a_normal;
+			return p + 0.5 * abs(cos(uTime*0.003 + p.y*2.0 + p.x*2.0 + p.z)) * a_normal;
 		}
         
         out lowp vec4 color;
@@ -72,9 +72,12 @@ function onRender(dt) {
     gCamera.updateViewMatrix();
     gl.clearScreen();
 
-    gGridShader.activate().setCameraMatrix(gCamera.viewMatrix).renderModal(gGridModal.preRender());
+    gGridShader.activate()
+        .setCameraMatrix(gCamera.viewMatrix)
+        .renderModal(gGridModal.preRender());
 
-    gShader.activate().preRender().setCameraMatrix(gCamera.viewMatrix)
+    gShader.activate().preRender()
+        .setCameraMatrix(gCamera.viewMatrix)
         .setTime(performance.now())
         .renderModal(gModal.preRender());
 

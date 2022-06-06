@@ -40,7 +40,7 @@ function GLInstance(canvasID) {
     }
 
     // turns arrays into GL buffers
-    gl.createMeshVAO = function (name, arrIdx, arrVert, arrNor, arrUV) {
+    gl.createMeshVAO = function (name, arrIdx, arrVert, arrNor, arrUV, vertLen) {
         var rtn = { drawMode: gl.TRIANGLES };
 
         rtn.vao = gl.createVertexArray();
@@ -48,13 +48,13 @@ function GLInstance(canvasID) {
 
         if (arrVert) {
             rtn.bufVetices = gl.createBuffer();
-            rtn.vertexComponentLen = 3;
+            rtn.vertexComponentLen = vertLen || 3;
             rtn.vertexCount = arrVert.length / rtn.vertexComponentLen;
 
             gl.bindBuffer(gl.ARRAY_BUFFER, rtn.bufVetices);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(arrVert), gl.STATIC_DRAW);
             gl.enableVertexAttribArray(ATTR_POSITION_LOC);
-            gl.vertexAttribPointer(ATTR_POSITION_LOC, 3, gl.FLOAT, false, 0, 0);
+            gl.vertexAttribPointer(ATTR_POSITION_LOC, rtn.vertexComponentLen, gl.FLOAT, false, 0, 0);
         }
 
         if (arrNor) {
@@ -98,11 +98,11 @@ function GLInstance(canvasID) {
         gl.bindTexture(gl.TEXTURE_2D, tex);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
 
-        gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
-        gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR_MIPMAP_NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
         gl.generateMipmap(gl.TEXTURE_2D);
 
-        gl.bindTexture(gl.TEXTURE_2D,null);
+        gl.bindTexture(gl.TEXTURE_2D, null);
         gl.mTextureCache[name] = tex;
         if (doYFlip) {
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
@@ -134,7 +134,7 @@ function GLInstance(canvasID) {
     return gl;
 }
 
-class GLUtil{
+class GLUtil {
     //Convert Hex colors to float arrays, can batch process a list into one big array.
     //example : GlUtil.rgbArray("#FF0000","00FF00","#0000FF");
     static rgbArray() {
