@@ -12,5 +12,5 @@ learn from [fun_with_webgl2](https://www.youtube.com/watch?v=LtFujAtKM5I&list=PL
 | the camera       | use the camera travel the scene & and build a grids with xyz axis | [the camera](https://krapnikkk.github.io/fun_with_webgl2/lesson_006) |
 | the quads        | create the quads with triangles and indices                  | [the quads](https://krapnikkk.github.io/fun_with_webgl2/lesson_007) |
 | texture          | load texture and render the image                            | [texture](https://krapnikkk.github.io/fun_with_webgl2/lesson_008) |
-|                  |                                                              |                                                              |
+| cube             | create a cube with animation by normal                       | [cube](https://krapnikkk.github.io/fun_with_webgl2/lesson_009) |
 
