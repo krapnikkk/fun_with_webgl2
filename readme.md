@@ -14,4 +14,4 @@ learn from [fun_with_webgl2](https://www.youtube.com/watch?v=LtFujAtKM5I&list=PL
 | texture          | load texture and render the image                            | [texture](https://krapnikkk.github.io/fun_with_webgl2/lesson_008) |
 | the cube         | create a cube with animation by normal                       | [cube](https://krapnikkk.github.io/fun_with_webgl2/lesson_009) |
 | skybox           | use cubeTexture make a skybox                                | [skybox](https://krapnikkk.github.io/fun_with_webgl2/lesson_010) |
-
+| load obj file    | parse obj file & load                                        | [load obj file](https://krapnikkk.github.io/fun_with_webgl2/lesson_011) |
