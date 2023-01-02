@@ -16,3 +16,5 @@ learn from [fun_with_webgl2](https://www.youtube.com/watch?v=LtFujAtKM5I&list=PL
 | skybox           | use cubeTexture make a skybox                                | [skybox](https://krapnikkk.github.io/fun_with_webgl2/lesson_010) |
 | load obj file    | parse obj file & load                                        | [load obj file](https://krapnikkk.github.io/fun_with_webgl2/lesson_011) |
 | Phong Lighting    | create the light with ambient&diffuse&specular              | [Phong Lighting](https://krapnikkk.github.io/fun_with_webgl2/lesson_012) |
+| Resources    | Refactoring Shader & Resources              | [Refactoring Shader & Resources](https://krapnikkk.github.io/fun_with_webgl2/lesson_013) |
+| Texture Masks    | Texture Masks              | [Texture Masks](https://krapnikkk.github.io/fun_with_webgl2/lesson_014) |
