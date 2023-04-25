@@ -18,3 +18,4 @@ learn from [fun_with_webgl2](https://www.youtube.com/watch?v=LtFujAtKM5I&list=PL
 | Phong Lighting    | create the light with ambient&diffuse&specular              | [Phong Lighting](https://krapnikkk.github.io/fun_with_webgl2/lesson_012) |
 | Resources    | Refactoring Shader & Resources              | [Refactoring Shader & Resources](https://krapnikkk.github.io/fun_with_webgl2/lesson_013) |
 | Texture Masks    | Texture Masks              | [Texture Masks](https://krapnikkk.github.io/fun_with_webgl2/lesson_014) |
+| Atlas Texture    | Atlas Texture              | [Atlas Texture](https://krapnikkk.github.io/fun_with_webgl2/lesson_015) |
